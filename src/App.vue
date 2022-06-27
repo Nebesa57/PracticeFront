@@ -2,7 +2,7 @@
     <div id="app">
         <page-header />
         <img src="./assets/logo.png" class="fas fa-users-class" />
-        <button >IDi na Huy</button>
+        <button ></button>
         <router-view />
     </div>
 </template>
