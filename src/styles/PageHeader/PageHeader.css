@@ -1,0 +1,31 @@
+.header {
+    background-color: #198754;
+    padding-top: 10px;
+}
+
+.header .nav {
+    margin-left: 30px;
+}
+
+.header .nav-link {
+    margin-left: 5px;
+    color: #fff;
+    font-size: 20px;
+}
+
+.header .nav-link button {
+    color: #fff;
+}
+
+.header .nav-link:focus {
+    background-color: #fff;
+}
+
+.header button:focus {
+    color: #198754;
+}
+
+.header .navbar-brand {
+    margin: 0px 50px 0px auto;
+    padding-top: 0px;
+}

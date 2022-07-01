@@ -1,8 +1,6 @@
 <template>
     <div id="app">
         <page-header />
-        <img src="./assets/logo.png" class="fas fa-users-class" />
-        <button>кнопка</button>
         <router-view />
     </div>
 </template>

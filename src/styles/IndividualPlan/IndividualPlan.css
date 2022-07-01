@@ -1,0 +1,15 @@
+.kanban-column {
+    min-height: 80px;
+    text-align: left;
+}
+
+.big-checkbox {
+    width: 25px;
+    height: 25px;
+}
+
+.card:hover {
+
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    transform: scale(1.1);
+}
