@@ -1,18 +1,9 @@
-h1,
-h2 {
-    font-weight: normal;
+.profileCard {
+    text-align: left;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
+.profileCard:hover {
 
-li {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-a {
-    color: #42b983;
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    transform: scale(1.05);
 }
