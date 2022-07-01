@@ -4,6 +4,7 @@ import Materials from '@/components/Materials/Materials.vue';
 import IndividualPlan from '@/components/IndividualPlan/IndividualPlan.vue';
 import Colleagues from '@/components/Colleagues/Colleagues.vue';
 import App from '@/App.vue';
+import NotFound from '@/components/NotFound/NotFound.vue';
 
 Vue.use(Router);
 
@@ -30,5 +31,10 @@ export default new Router({
             name: 'Colleagues',
             component: Colleagues,
         },
+        {
+            path: '*',
+            name: 'NotFound',
+            component: NotFound,
+        }
     ],
 });
