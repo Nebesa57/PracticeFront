@@ -1,5 +1,5 @@
 <template>
-    <b-container class="">
+    <b-container>
         <div class="row">
             <b-row class="col-2 p-lg-4">
                 <b-button variant="success" @click="addCardModal(card)">Добавить</b-button>

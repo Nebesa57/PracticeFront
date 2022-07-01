@@ -1,41 +1,94 @@
 <template>
-    <div class="hello">
-        <h1>{{ msg }}</h1>
-        <h2>Essential Links</h2>
-        <ul>
-            <li>
-                <a href="https://vuejs.org" target="_blank"> Core Docs </a>
-            </li>
-            <li>
-                <a href="https://forum.vuejs.org" target="_blank"> Forum </a>
-            </li>
-            <li>
-                <a href="https://chat.vuejs.org" target="_blank"> Community Chat </a>
-            </li>
-            <li>
-                <a href="https://twitter.com/vuejs" target="_blank"> Twitter </a>
-            </li>
-            <br />
-            <li>
-                <a href="http://vuejs-templates.github.io/webpack/" target="_blank"> Docs for This Template </a>
-            </li>
-        </ul>
-        <h2>Ecosystem</h2>
-        <ul>
-            <li>
-                <a href="http://router.vuejs.org/" target="_blank"> vue-router </a>
-            </li>
-            <li>
-                <a href="http://vuex.vuejs.org/" target="_blank"> vuex </a>
-            </li>
-            <li>
-                <a href="http://vue-loader.vuejs.org/" target="_blank"> vue-loader </a>
-            </li>
-            <li>
-                <a href="https://github.com/vuejs/awesome-vue" target="_blank"> awesome-vue </a>
-            </li>
-        </ul>
-    </div>
+    <b-container>
+        <div class="row">
+            <b-row class="col-2 p-lg-4">
+                <b-button variant="success" @click="addCardProfileModal(cardProfile)">Добавить</b-button>
+            </b-row>
+        </div>
+
+        <div class="row mt-2">
+            <div>
+                <div class="p-2 alert alert-success">
+                    <h3>Коллеги</h3>
+                    <div v-for="element in colleagues" :key="element.name">
+                        <div class="list-group-item mt-1 profileCard" button @click="openCardProfileModal(element)">
+                            <b-row>
+                                <b-col cols="1">
+                                    <b-icon icon="person-circle" variant="success"></b-icon>
+                                </b-col>
+                                <b-col>
+                                    <div>Имя: {{ element.name }}</div>
+                                    <div>Направление: {{ element.direction }}</div>
+                                    <div>Должность: {{ element.position }}</div>
+                                </b-col>
+                            </b-row>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <b-modal
+            id="my-modal"
+            ref="my-modal"
+            :hide-footer="hideFooterModal"
+            :title="titleModal"
+            ok-only
+            @show="resetModal"
+            @hidden="resetModal"
+            @ok="addCardInBackLog"
+        >
+            <b-container class="p-1 alert alert-warning">
+                <b-form-input
+                    id="input-1"
+                    v-model="cardProfile.name"
+                    :state="cardProfileState(cardProfile.name)"
+                    required
+                    placeholder="Имя"
+                />
+                <b-form-input
+                    id="input-2"
+                    v-model="cardProfile.position"
+                    :state="cardProfileState(cardProfile.position)"
+                    required
+                    class="mt-2"
+                    placeholder="Должность"
+                />
+                <b-form-input
+                    id="input-3"
+                    v-model="cardProfile.direction"
+                    :state="cardProfileState(cardProfile.direction)"
+                    class="mt-2"
+                    aria-describedby="input-live-feedback"
+                    required
+                    placeholder="Направление"
+                />
+                <b-form-invalid-feedback id="input-live-feedback" class="mt-2">
+                    Введите не менее 2 букв
+                </b-form-invalid-feedback>
+                <b-form-textarea
+                    id="textarea-auto-height"
+                    v-model="cardProfile.description"
+                    placeholder="Описание"
+                    max-rows="8"
+                    class="mt-2"
+                />
+
+                <hr />
+                <b-row class="mt-2">
+                    <b-col class="d-flex justify-content-end">
+                        <b-button
+                            v-if="showSaveButton"
+                            size="sm"
+                            variant="success"
+                            @click="saveCardProfile(cardProfile)"
+                        >
+                            Сохранить
+                        </b-button>
+                    </b-col>
+                </b-row>
+            </b-container>
+        </b-modal>
+    </b-container>
 </template>
 
 <script>
@@ -45,8 +98,104 @@ export default {
     name: 'Colleagues',
     data() {
         return {
-            msg: 'Colleagues',
+            // for new tasks
+            cardProfile: {
+                name: '',
+                position: '',
+                direction: '',
+                description: '',
+            },
+            // 4 arrays to keep track of our 4 statuses
+            colleagues: [
+                {
+                    name: 'Васильев Владислав',
+                    position: 'Junior',
+                    direction: 'QA',
+                    description: '',
+                },
+                {
+                    name: 'Генькин Гена',
+                    position: 'Middle',
+                    direction: 'Frontend',
+                    description: '',
+                },
+                {
+                    name: 'Верёвкин Андрей',
+                    position: 'Senior',
+                    direction: 'Backend',
+                    description: '',
+                },
+                {
+                    name: 'Хилев Максим',
+                    position: 'Middle',
+                    direction: 'Backend',
+                    description: '',
+                },
+            ],
+            hideFooterModal: true,
+            titleModal: '',
+            showSaveButton: true,
         };
+    },
+    methods: {
+        //add new tasks method
+        addCardProfileModal: function (card) {
+            this.styleModal(card);
+            this.$refs['my-modal'].show();
+            this.cardProfile = card;
+        },
+
+        addCardInBackLog: function (bvModalEvent) {
+            if (!this.validation(this.cardProfile)) {
+                return bvModalEvent.preventDefault();
+            }
+
+            if (this.cardProfile) {
+                this.colleagues.push({
+                    name: this.cardProfile.name,
+                    position: this.cardProfile.position,
+                    direction: this.cardProfile.direction,
+                    description: this.cardProfile.direction,
+                });
+            }
+        },
+
+        openCardProfileModal: function (card) {
+            this.styleModal(card);
+            this.$refs['my-modal'].show();
+            this.cardProfile = card;
+        },
+
+        saveCardProfile: function (bvModalEvent) {
+            if (!this.validation(this.cardProfile)) {
+                return bvModalEvent.preventDefault();
+            }
+            this.$refs['my-modal'].hide();
+        },
+
+        validation: function (card) {
+            return card.name.length < 2 || card.direction.length < 2 || card.position.length < 2 ? false : true;
+        },
+
+        cardProfileState: function (field) {
+            return field.length > 1 ? true : false;
+        },
+
+        resetModal: function () {
+            this.cardProfile = { name: '', position: '', direction: '', description: '' };
+        },
+
+        styleModal: function (card) {
+            if (card === this.cardProfile) {
+                this.showSaveButton = false;
+                this.hideFooterModal = false;
+                this.titleModal = 'Добавить карточку профиля';
+            } else {
+                this.showSaveButton = true;
+                this.hideFooterModal = true;
+                this.titleModal = 'Обновить карточку профиля';
+            }
+        },
     },
 };
 </script>
