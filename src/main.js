@@ -13,12 +13,13 @@ Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
-
 Vue.use(VueAxios, axios);
 /* eslint-disable no-new */
-new Vue({
+var vm = new Vue({
     el: '#app',
     router,
     components: { App },
     template: '<App/>',
 });
+
+export default vm;

@@ -3,7 +3,6 @@ import dialogService from '../dialog.service';
 
 export default {
     get(resource, slug = '') {
-        this.setHeader();
         let url;
 
         if (slug) url = `${resource}/${slug}`;
@@ -57,7 +56,6 @@ export default {
     },
 
     post(resource, params) {
-        this.setHeader();
 
         return new Promise((resolve, reject) => {
             Vue.axios
@@ -105,17 +103,14 @@ export default {
     },
 
     update(resource, slug, params) {
-        this.setHeader();
         return Vue.axios.put(`${resource}/${slug}`, params);
     },
 
     put(resource, params) {
-        this.setHeader();
         return Vue.axios.put(`${resource}`, params);
     },
 
     delete(resource) {
-        this.setHeader();
         return Vue.axios.delete(resource).catch(error => {
             throw new Error(`[RWV] ApiService ${error}`);
         });

@@ -8,7 +8,7 @@ export default {
                 return BaseApi.get(`${ApiUrls.User.Materials.Lectures.GetMaterial}?id=${materialId}`);
             },
             GetMaterials: function () {
-                return BaseApi.get(ApiUrls.User.Materials.Lectures.Get);
+                return BaseApi.get(ApiUrls.User.Materials.Lectures.GetMaterials);
             },
             PostEdit: function (materialDto) {
                 return BaseApi.post(ApiUrls.User.Materials.Lectures.PostMaterial, materialDto);
