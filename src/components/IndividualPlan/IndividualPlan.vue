@@ -143,7 +143,7 @@
 
 <script>
 import draggable from 'vuedraggable';
-import '@/styles/IndividualPlan/IndividualPlan.css';
+import '@/styles/individualPlan/IndividualPlan.css';
 
 export default {
     name: 'IndividualPlan',

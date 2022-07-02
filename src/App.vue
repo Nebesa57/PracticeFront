@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import PageHeader from '@/components/PageHeader/PageHeader.vue';
+import PageHeader from '@/components/pageHeader/PageHeader.vue';
 
 export default {
     name: 'App',

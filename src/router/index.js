@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Materials from '@/components/Materials/Materials.vue';
-import IndividualPlan from '@/components/IndividualPlan/IndividualPlan.vue';
-import Colleagues from '@/components/Colleagues/Colleagues.vue';
+import Materials from '@/components/materials/Materials.vue';
+import IndividualPlan from '@/components/individualPlan/IndividualPlan.vue';
+import Colleagues from '@/components/colleagues/Colleagues.vue';
 import App from '@/App.vue';
-import NotFound from '@/components/NotFound/NotFound.vue';
+import NotFound from '@/components/notFound/NotFound.vue';
 
 Vue.use(Router);
 
@@ -35,6 +35,6 @@ export default new Router({
             path: '*',
             name: 'NotFound',
             component: NotFound,
-        }
+        },
     ],
 });

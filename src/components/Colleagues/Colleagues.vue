@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import '@/styles/Colleagues/Colleagues.css';
+import '@/styles/colleagues/Colleagues.css';
 
 export default {
     name: 'Colleagues',
