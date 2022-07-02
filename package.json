@@ -16,6 +16,7 @@
     "bootstrap-vue": "^2.22.0",
     "jshint": "^2.13.4",
     "vue": "^2.6.14",
+    "vue-axios": "^3.4.1",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.24.3"
   },

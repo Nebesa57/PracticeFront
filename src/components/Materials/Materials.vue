@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import '@/styles/Materials/Materials.css';
+import '@/styles/materials/Materials.css';
 
 export default {
     name: 'Materials',

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import '@/styles/PageHeader/PageHeader.css';
+import '@/styles/pageHeader/PageHeader.css';
 
 export default {
     name: 'PageHeader',
