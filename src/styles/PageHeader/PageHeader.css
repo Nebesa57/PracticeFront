@@ -17,12 +17,14 @@
     color: #fff;
 }
 
-.header .nav-link:focus {
+.header .nav-link.activeBtn {
     background-color: #fff;
+    color: #198754;
 }
 
-.header button:focus {
-    color: #198754;
+.header button:hover{
+    background-color: #2ce48e;
+    color:#198754;
 }
 
 .header .navbar-brand {
