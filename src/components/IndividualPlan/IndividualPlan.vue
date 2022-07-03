@@ -152,7 +152,6 @@ export default {
         draggable,
     },
     data() {
-
         return {
             // for new tasks
             card: {
@@ -209,6 +208,7 @@ export default {
         };
     },
     methods: {
+       
         //add new tasks method
         addCardModal: function (card) {
             this.styleModal(card);
