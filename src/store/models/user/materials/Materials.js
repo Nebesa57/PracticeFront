@@ -1,23 +1,23 @@
 export default class {
     Id = null;
 
-    UserId = null;
-
     Name = '';
+
+    Type = null;
 
     Description = '';
 
-    Column = '';
+    date = null;
 
     mapFromDto = function (viewModel) {
         let dto = viewModel;
         if (!dto) return this;
 
         this.Id = dto.Id;
-        this.UserId = dto.UserId;
         this.Name = dto.Name;
+        this.Type = dto.Type;
         this.Description = dto.Description;
-        this.Column = dto.Column;
+        this.Date = new Date(dto.Date);
 
         return this;
     };
@@ -26,14 +26,15 @@ export default class {
         let dto = JSON.parse(JSON.stringify(this));
 
         dto.Name = dto.Name;
+        dto.Type = dto.Type;
         dto.Description = dto.Description;
-        dto.Column = dto.Column;
+        dto.Date = dto.Date;
 
         return dto;
     };
 
     isInValid = () => {
-        if (this.Name == '' || this.Description == null || this.Column == null) {
+        if (this.Name == '' || this.Description == null || this.Type == null || this.Date == null) {
             return 1;
         } else return 0;
     };

@@ -144,7 +144,6 @@
 <script>
 import draggable from 'vuedraggable';
 import '@/styles/individualPlan/IndividualPlan.css';
-import apiServices from '@/services/api.service';
 
 export default {
     name: 'IndividualPlan',
@@ -153,8 +152,6 @@ export default {
         draggable,
     },
     data() {
-
-        apiServices.User.Materials.Lectures.GetMaterials();
 
         return {
             // for new tasks
