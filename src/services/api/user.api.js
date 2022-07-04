@@ -9,8 +9,8 @@ export default {
         PostUser: function (userId, user) {
             return BaseApi.post(`${ApiUrls.User.Users.PostUser}?id=${userId}`, user);
         },
-        PutUser: function (userId, user) {
-            return BaseApi.put(`${ApiUrls.User.Users.PutUser}?id=${userId}`, user);
+        PutUser: function (user) {
+            return BaseApi.put(ApiUrls.User.Users.PutUser, user);
         },
         DeleteUser: function (userId, user) {
             return BaseApi.delete(`${ApiUrls.User.Users.PutUser}?id=${userId}`, user);

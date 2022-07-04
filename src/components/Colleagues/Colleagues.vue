@@ -10,7 +10,7 @@
             <div>
                 <div class="p-2 alert alert-success">
                     <h3>Коллеги</h3>
-                    <div v-for="element in colleagues" :key="element.name">
+                    <div v-for="element in colleagues" :key="element.id">
                         <div class="list-group-item mt-1 profileCard" button @click="openCardProfileModal(element)">
                             <b-row>
                                 <b-col cols="1">
@@ -35,7 +35,7 @@
             ok-only
             @show="resetModal"
             @hidden="resetModal"
-            @ok="addCardInBackLog"
+            @ok="addCardProfileInList"
         >
             <b-container class="p-1 alert alert-warning">
                 <b-form-input
@@ -65,6 +65,7 @@
                 <b-form-invalid-feedback id="input-live-feedback" class="mt-2">
                     Введите не менее 2 букв
                 </b-form-invalid-feedback>
+                <hr />
                 <b-form-textarea
                     id="textarea-auto-height"
                     v-model="cardProfile.description"
@@ -72,15 +73,13 @@
                     max-rows="8"
                     class="mt-2"
                 />
-
-                <hr />
                 <b-row class="mt-2">
                     <b-col class="d-flex justify-content-end">
                         <b-button
                             v-if="showSaveButton"
                             size="sm"
                             variant="success"
-                            @click="saveCardProfile(cardProfile)"
+                            @click="saveCardProfile(_, cardProfile)"
                         >
                             Сохранить
                         </b-button>
@@ -93,51 +92,43 @@
 
 <script>
 import '@/styles/colleagues/Colleagues.css';
+import apiService from '@/services/api.service';
+import Loading from '@/store/models/Loading';
+import ColleaguesEditModel from '@/store/models/user/colleagues/Colleagues';
 
 export default {
     name: 'Colleagues',
     data() {
+        let load = new Loading();
+        this.getColleagues(load);
         return {
+            load: load,
             // for new tasks
             cardProfile: {
+                id: null,
                 name: '',
                 position: '',
                 direction: '',
                 description: '',
             },
             // 4 arrays to keep track of our 4 statuses
-            colleagues: [
-                {
-                    name: 'Васильев Владислав',
-                    position: 'Junior',
-                    direction: 'QA',
-                    description: '',
-                },
-                {
-                    name: 'Генькин Гена',
-                    position: 'Middle',
-                    direction: 'Frontend',
-                    description: '',
-                },
-                {
-                    name: 'Верёвкин Андрей',
-                    position: 'Senior',
-                    direction: 'Backend',
-                    description: '',
-                },
-                {
-                    name: 'Хилев Максим',
-                    position: 'Middle',
-                    direction: 'Backend',
-                    description: '',
-                },
-            ],
+            colleagues: [],
             hideFooterModal: true,
             titleModal: '',
             showSaveButton: true,
         };
     },
     methods: {
+        getColleagues: function (load) {
+            load.Calculate(true);
+
+            apiService.User.Users.GetUsers()
+                .then(response => {
+                    this.colleagues = response.data;
+                    load.Calculate(false);
+                })
+                .catch(() => load.Calculate(false));
+        },
         //add new tasks method
         addCardProfileModal: function (card) {
             this.styleModal(card);
@@ -145,7 +136,7 @@ export default {
             this.cardProfile = card;
         },
 
-        addCardInBackLog: function (bvModalEvent) {
+        addCardProfileInList: function (bvModalEvent) {
             if (!this.validation(this.cardProfile)) {
                 return bvModalEvent.preventDefault();
             }
@@ -166,10 +157,20 @@ export default {
             this.cardProfile = card;
         },
 
-        saveCardProfile: function (bvModalEvent) {
+        saveCardProfile: function (bvModalEvent, cardProfile) {
             if (!this.validation(this.cardProfile)) {
                 return bvModalEvent.preventDefault();
             }
+
+            var model = new ColleaguesEditModel().mapFromDto(cardProfile);
+            var myModal = model.mapToDto();
+
+            this.load.Calculate(true);
+
+            apiService.User.Users.PutUser(myModal)
+                .then(() => location.reload())
+                .catch(() => this.load.Calculate(false));
+
             this.$refs['my-modal'].hide();
         },
 

@@ -208,7 +208,6 @@ export default {
         };
     },
     methods: {
-       
         //add new tasks method
         addCardModal: function (card) {
             this.styleModal(card);
