@@ -1,23 +1,23 @@
 export default class {
-    Id = null;
+    id = null;
 
-    Name = '';
+    name = '';
 
-    Position = '';
+    position = '';
 
-    Description = '';
+    description = '';
 
-    CardId = null;
+    direction = '';
 
     mapFromDto = function (viewModel) {
         let dto = viewModel;
         if (!dto) return this;
 
-        this.Id = dto.Id;
-        this.Name = dto.Name;
-        this.Position = dto.Position;
-        this.Description = dto.Description;
-        this.CardId = dto.CardId;
+        this.id = dto.id;
+        this.name = dto.name;
+        this.position = dto.position;
+        this.description = dto.description;
+        this.direction = dto.direction;
 
         return this;
     };
@@ -25,16 +25,17 @@ export default class {
     mapToDto = function () {
         let dto = JSON.parse(JSON.stringify(this));
 
-        dto.Name = dto.Name;
-        dto.Position = dto.Position;
-        dto.Description = dto.Description;
+        dto.name = dto.name;
+        dto.position = dto.position;
+        dto.description = dto.description;
+        dto.direction = dto.direction;
 
         return dto;
     };
 
-    isInValid = () => {
-        if (this.Name == '' || this.Position == '' || this.Description == null) {
-            return 1;
-        } else return 0;
-    };
+    // isInValid = () => {
+    //     if (this.Name == '' || this.Position == '' || this.Description == '' || this.Direction == '') {
+    //         return 1;
+    //     } else return 0;
+    // };
 }
