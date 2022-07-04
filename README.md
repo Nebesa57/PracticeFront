@@ -28,9 +28,10 @@ To implement the task, were used: JavaScript, vue, css, html
 Example of how the program works
 
 Materials window
+![image 2png](https://user-images.githubusercontent.com/86678856/177195471-784c4e6a-908d-4b1e-b3a8-8bf986b0f4b9.png)
 ![image](https://user-images.githubusercontent.com/86678856/177195456-8579c0f7-f69a-4b46-9eeb-662290ca7689.png)
 ![image1](https://user-images.githubusercontent.com/86678856/177195460-abaad46d-f855-46b9-9a92-da99417cabc6.png)
-![image 2png](https://user-images.githubusercontent.com/86678856/177195471-784c4e6a-908d-4b1e-b3a8-8bf986b0f4b9.png)
+
 
 Individual Plan window
 ![image3](https://user-images.githubusercontent.com/86678856/177195518-cb869c90-bb40-4af2-8776-9ae6aa0371ed.png)
