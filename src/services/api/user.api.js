@@ -6,17 +6,17 @@ export default {
         GetUsers: function () {
             return BaseApi.get(ApiUrls.User.Users.GetUsers);
         },
-        PostUser: function (userId, user) {
-            return BaseApi.post(`${ApiUrls.User.Users.PostUser}?id=${userId}`, user);
+        PostUser: function (user) {
+            return BaseApi.post(ApiUrls.User.Users.PostUser, user);
         },
         PutUser: function (user) {
             return BaseApi.put(ApiUrls.User.Users.PutUser, user);
         },
-        DeleteUser: function (userId, user) {
-            return BaseApi.delete(`${ApiUrls.User.Users.PutUser}?id=${userId}`, user);
+        DeleteUser: function (userId) {
+            return BaseApi.delete(`${ApiUrls.User.Users.PutUser}/${userId}`);
         },
         GetUser: function (userId) {
-            return BaseApi.get(`${ApiUrls.User.Users.GetUsers}?id=${userId}`);
+            return BaseApi.get(`${ApiUrls.User.Users.GetUsers}/${userId}`);
         },
     },
 
@@ -24,17 +24,17 @@ export default {
         GetCards: function () {
             return BaseApi.get(ApiUrls.User.Cards.GetCards);
         },
-        PostCard: function (cardId, card) {
-            return BaseApi.post(`${ApiUrls.User.Cards.PostCard}?id=${cardId}`, card);
+        PostCard: function (card) {
+            return BaseApi.post(ApiUrls.User.Cards.PostCard, card);
         },
-        PutCard: function (cardId, card) {
-            return BaseApi.put(`${ApiUrls.User.Cards.PutCard}?id=${cardId}`, card);
+        PutCard: function (card) {
+            return BaseApi.put(ApiUrls.User.Cards.PutCard, card);
         },
-        DeleteCard: function (cardId, card) {
-            return BaseApi.delete(`${ApiUrls.User.Cards.DeleteCard}?id=${cardId}`, card);
+        DeleteCard: function (cardId) {
+            return BaseApi.delete(`${ApiUrls.User.Cards.DeleteCard}/${cardId}`);
         },
         GetCard: function (cardId) {
-            return BaseApi.get(`${ApiUrls.User.Cards.GetCard}?id=${cardId}`);
+            return BaseApi.get(`${ApiUrls.User.Cards.GetCard}/${cardId}`);
         },
     },
 
@@ -42,17 +42,17 @@ export default {
         GetTasks: function () {
             return BaseApi.get(ApiUrls.User.Tasks.GetTasks);
         },
-        PostTask: function (taskId, task) {
-            return BaseApi.post(`${ApiUrls.User.Tasks.PostTask}?id=${taskId}`, task);
+        PostTask: function (task) {
+            return BaseApi.post(ApiUrls.User.Tasks.PostTask, task);
         },
-        PutTask: function (taskId, task) {
-            return BaseApi.put(`${ApiUrls.User.Tasks.PutTask}?id=${taskId}`, task);
+        PutTask: function (task) {
+            return BaseApi.put(ApiUrls.User.Tasks.PutTask, task);
         },
-        DeleteTask: function (taskId, task) {
-            return BaseApi.delete(`${ApiUrls.User.Tasks.DeleteTask}?id=${taskId}`, task);
+        DeleteTask: function (taskId) {
+            return BaseApi.delete(`${ApiUrls.User.Tasks.DeleteTask}/${taskId}`);
         },
         GetTask: function (taskId) {
-            return BaseApi.get(`${ApiUrls.User.Tasks.GetTask}?id=${taskId}`);
+            return BaseApi.get(`${ApiUrls.User.Tasks.GetTask}/${taskId}`);
         },
     },
 
@@ -60,17 +60,17 @@ export default {
         GetMaterials: function () {
             return BaseApi.get(ApiUrls.User.Materials.GetMaterials);
         },
-        PostMaterial: function (materialId, material) {
-            return BaseApi.post(`${ApiUrls.User.Materials.PostMaterial}?id=${materialId}`, material);
+        PostMaterial: function (material) {
+            return BaseApi.post(ApiUrls.User.Materials.PostMaterial, material);
         },
-        PutMaterial: function (materialId, material) {
-            return BaseApi.put(`${ApiUrls.User.Materials.PutMaterial}?id=${materialId}`, material);
+        PutMaterial: function (material) {
+            return BaseApi.put(ApiUrls.User.Materials.PutMaterial, material);
         },
-        DeleteMaterial: function (materialId, material) {
-            return BaseApi.delete(`${ApiUrls.User.Materials.DeleteMaterial}?id=${materialId}`, material);
+        DeleteMaterial: function (materialId) {
+            return BaseApi.delete(`${ApiUrls.User.Materials.DeleteMaterial}/${materialId}`);
         },
         GetMaterial: function (materialId) {
-            return BaseApi.get(`${ApiUrls.User.Materials.GetMaterial}?id=${materialId}`);
+            return BaseApi.get(`${ApiUrls.User.Materials.GetMaterial}/${materialId}`);
         },
     },
 };

@@ -127,8 +127,18 @@
                     </div>
                 </div>
                 <b-row class="mt-2">
+                    <b-col class="d-flex justify-content-end">
+                        <b-button
+                            v-if="showSaveAndDeleteButton"
+                            size="sm"
+                            variant="danger"
+                            @click="deleteCardProfile(cardProfile.id)"
+                        >
+                            Удалить профиль
+                        </b-button>
+                    </b-col>
                     <b-col cols="8" class="d-flex justify-content-end">
-                        <b-button v-if="showSaveButton" size="sm" variant="success" @click="saveCard(card)">
+                        <b-button v-if="showSaveAndDeleteButton" size="sm" variant="success" @click="saveCard(card)">
                             Сохранить
                         </b-button>
                     </b-col>
@@ -144,6 +154,8 @@
 <script>
 import draggable from 'vuedraggable';
 import '@/styles/individualPlan/IndividualPlan.css';
+import apiService from '@/services/api.service';
+import Loading from '@/store/models/Loading';
 
 export default {
     name: 'IndividualPlan',
@@ -152,7 +164,10 @@ export default {
         draggable,
     },
     data() {
+        let load = new Loading();
+        this.getCards(load);
         return {
+            load: load,
             // for new tasks
             card: {
                 name: '',
@@ -161,53 +176,44 @@ export default {
                 checkTask: [{ id: 1, check: false, text: '' }],
             },
             // 4 arrays to keep track of our 4 statuses
-            cardsBackLog: [
-                {
-                    name: 'Васильев Владислав',
-                    position: 'Junior',
-                    direction: 'QA',
-                    checkTask: [
-                        { id: 1, check: false, text: 'Вася' },
-                        { id: 2, check: true, text: 'Василёк' },
-                    ],
-                },
-                {
-                    name: 'Генькин Гена',
-                    position: 'Middle',
-                    direction: 'Frontend',
-                    checkTask: [
-                        { id: 1, check: false, text: 'Гренка' },
-                        { id: 2, check: true, text: 'Генка' },
-                    ],
-                },
-                {
-                    name: 'Верёвкин Андрей',
-                    position: 'Senior',
-                    direction: 'Backend',
-                    checkTask: [
-                        { id: 1, check: false, text: 'Верёвка' },
-                        { id: 2, check: true, text: 'Андрэ' },
-                    ],
-                },
-                {
-                    name: 'Хилев Максим',
-                    position: 'Middle',
-                    direction: 'Backend',
-                    checkTask: [
-                        { id: 1, check: false, text: 'Кличка' },
-                        { id: 2, check: false, text: 'Хилый' },
-                    ],
-                },
-            ],
+            cardsBackLog: [],
             cardsInProgress: [],
             cardsTested: [],
             cardsDone: [],
+            cards: [],
             hideFooterModal: true,
             titleModal: '',
-            showSaveButton: true,
+            showSaveAndDeleteButton: true,
         };
     },
     methods: {
+        getCards: function (load) {
+            load.Calculate(true);
+
+            apiService.User.Cards.GetCards()
+                .then(response => {
+                    this.cards = response.data;
+                    this.filterCards(this.cards);
+                    load.Calculate(false);
+                })
+                .catch(() => load.Calculate(false));
+        },
+        filterCards: function (cards) {
+            cards.forEach(card => {
+                if (card.column == 1) {
+                    this.cardsBackLog.push(card);
+                }
+                if (card.column == 2) {
+                    this.cardsInProgress.push(card);
+                }
+                if (card.column == 3) {
+                    this.cardsTested.push(card);
+                }
+                if (card.column == 4) {
+                    this.cardsDone.push(card);
+                }
+            });
+        },
         //add new tasks method
         addCardModal: function (card) {
             this.styleModal(card);
@@ -236,7 +242,14 @@ export default {
             this.card = card;
         },
 
-        saveCard: function (bvModalEvent) {
+        saveCard: function (bvModalEvent, card) {
+            this.load.Calculate(true);
+
+            apiService.User.Cards.PutCard(card)
+                .then(response => {
+                    this.load.Calculate(false);
+                })
+                .catch(() => load.Calculate(false));
             if (!this.validation(this.card)) {
                 return bvModalEvent.preventDefault();
             }
@@ -261,11 +274,11 @@ export default {
 
         styleModal: function (card) {
             if (card === this.card) {
-                this.showSaveButton = false;
+                this.showSaveAndDeleteButton = false;
                 this.hideFooterModal = false;
                 this.titleModal = 'Добавить карточку';
             } else {
-                this.showSaveButton = true;
+                this.showSaveAndDeleteButton = true;
                 this.hideFooterModal = true;
                 this.titleModal = 'Обновить карточку';
             }

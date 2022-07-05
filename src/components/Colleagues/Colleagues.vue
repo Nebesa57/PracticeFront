@@ -74,9 +74,19 @@
                     class="mt-2"
                 />
                 <b-row class="mt-2">
+                    <b-col cols="9" class="d-flex justify-content-end">
+                        <b-button
+                            v-if="showSaveAndDeleteButton"
+                            size="sm"
+                            variant="danger"
+                            @click="deleteCardProfile(cardProfile.id)"
+                        >
+                            Удалить профиль
+                        </b-button>
+                    </b-col>
                     <b-col class="d-flex justify-content-end">
                         <b-button
-                            v-if="showSaveButton"
+                            v-if="showSaveAndDeleteButton"
                             size="sm"
                             variant="success"
                             @click="saveCardProfile(_, cardProfile)"
@@ -94,7 +104,6 @@
 import '@/styles/colleagues/Colleagues.css';
 import apiService from '@/services/api.service';
 import Loading from '@/store/models/Loading';
-import ColleaguesEditModel from '@/store/models/user/colleagues/Colleagues';
 
 export default {
     name: 'Colleagues',
@@ -105,7 +114,6 @@ export default {
             load: load,
             // for new tasks
             cardProfile: {
-                id: null,
                 name: '',
                 position: '',
                 direction: '',
@@ -115,7 +123,7 @@ export default {
             colleagues: [],
             hideFooterModal: true,
             titleModal: '',
-            showSaveButton: true,
+            showSaveAndDeleteButton: true,
         };
     },
     methods: {
@@ -142,12 +150,11 @@ export default {
             }
 
             if (this.cardProfile) {
-                this.colleagues.push({
-                    name: this.cardProfile.name,
-                    position: this.cardProfile.position,
-                    direction: this.cardProfile.direction,
-                    description: this.cardProfile.direction,
-                });
+                this.load.Calculate(true);
+
+                apiService.User.Users.PostUser(this.cardProfile)
+                    .then(() => location.reload())
+                    .catch(() => this.load.Calculate(false));
             }
         },
 
@@ -162,16 +169,21 @@ export default {
                 return bvModalEvent.preventDefault();
             }
 
-            var model = new ColleaguesEditModel().mapFromDto(cardProfile);
-            var myModal = model.mapToDto();
-
             this.load.Calculate(true);
 
-            apiService.User.Users.PutUser(myModal)
+            apiService.User.Users.PutUser(cardProfile)
                 .then(() => location.reload())
                 .catch(() => this.load.Calculate(false));
 
             this.$refs['my-modal'].hide();
+        },
+
+        deleteCardProfile: function (idProfile) {
+            this.load.Calculate(true);
+
+            apiService.User.Users.DeleteUser(idProfile)
+                .then(() => location.reload())
+                .catch(() => this.load.Calculate(false));
         },
 
         validation: function (card) {
@@ -188,11 +200,11 @@ export default {
 
         styleModal: function (card) {
             if (card === this.cardProfile) {
-                this.showSaveButton = false;
+                this.showSaveAndDeleteButton = false;
                 this.hideFooterModal = false;
                 this.titleModal = 'Добавить карточку профиля';
             } else {
-                this.showSaveButton = true;
+                this.showSaveAndDeleteButton = true;
                 this.hideFooterModal = true;
                 this.titleModal = 'Обновить карточку профиля';
             }
