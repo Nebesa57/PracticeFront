@@ -89,7 +89,7 @@
                             v-if="showSaveAndDeleteButton"
                             size="sm"
                             variant="success"
-                            @click="saveCardProfile(_, cardProfile)"
+                            @click="updateCardProfile(_, cardProfile)"
                         >
                             Сохранить
                         </b-button>
@@ -164,7 +164,7 @@ export default {
             this.cardProfile = card;
         },
 
-        saveCardProfile: function (bvModalEvent, cardProfile) {
+        updateCardProfile: function (bvModalEvent, cardProfile) {
             if (!this.validation(this.cardProfile)) {
                 return bvModalEvent.preventDefault();
             }
