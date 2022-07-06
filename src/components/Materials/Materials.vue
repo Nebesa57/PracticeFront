@@ -9,7 +9,7 @@
                         <h3>Материалы</h3>
 
                         <div :list="materials" class="list-group kanban-column" group="tasks">
-                            <div v-for="element in materials" :key="element.date">
+                            <div v-for="element in materials" :key="element.id">
                                 <div class="list-group-item mt-1 card" button @click="openCardMaterialsModal(element)">
                                     <div>Тип: {{ element.type }}</div>
 
@@ -106,7 +106,7 @@
                 <hr />
 
                 <b-row class="mt-2">
-                    <b-col class="d-flex justify-content-end">
+                    <b-col class="d-flex justify-content-start">
                         <b-button
                             v-if="showSaveButton"
                             size="sm"
@@ -121,7 +121,7 @@
                             v-if="showSaveButton"
                             size="sm"
                             variant="success"
-                            @click="saveCardMaterials(cardMaterials)"
+                            @click="saveCardMaterials(_, cardMaterials)"
                         >
                             Сохранить
                         </b-button>
@@ -154,7 +154,9 @@ export default {
     data() {
         let load = new Loading();
         this.getMaterials(load);
+
         return {
+            load: load,
             cardMaterials: {
                 type: '',
                 date: new Date(),
@@ -216,30 +218,25 @@ export default {
             this.$refs['show-modal'].show();
             this.cardMaterials = card;
         },
-        deleteMaterial(bvModalEvent, id) {
+        deleteMaterial(id) {
             this.load.Calculate(true);
 
             apiService.User.Materials.DeleteMaterial(id)
-                .then(() => {
-                    this.load.Calculate(false);
-                })
+                .then(() => location.reload())
                 .catch(() => this.load.Calculate(false));
-            if (!this.validation(this.card)) {
-                return bvModalEvent.preventDefault();
-            }
             this.$refs['my-modal'].hide();
         },
         saveCardMaterials: function (bvModalEvent, card) {
+            if (!this.validation(card)) {
+                return bvModalEvent.preventDefault();
+            }
+
             this.load.Calculate(true);
 
             apiService.User.Materials.PutMaterial(card)
-                .then(() => {
-                    this.load.Calculate(false);
-                })
+                .then(() => location.reload())
                 .catch(() => this.load.Calculate(false));
-            if (!this.validation(this.card)) {
-                return bvModalEvent.preventDefault();
-            }
+
             this.$refs['my-modal'].hide();
         },
         addCardInBackLog: function (bvModalEvent) {

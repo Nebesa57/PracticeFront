@@ -3,11 +3,11 @@ export default class {
 
     Name = '';
 
-    Type = null;
+    Type = '';
 
     Description = '';
 
-    date = null;
+    Date = '';
 
     mapFromDto = function (viewModel) {
         let dto = viewModel;
