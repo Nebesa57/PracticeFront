@@ -1,18 +1,9 @@
-h1,
-h2 {
-    font-weight: normal;
+.card:hover{
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    transform: scale(1.1);
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-a {
-    color: #42b983;
+.kanban-column {
+    min-height: 80px;
+    text-align: left;
 }
