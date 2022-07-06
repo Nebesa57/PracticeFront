@@ -34,7 +34,7 @@ export default class {
     };
 
     isInValid = () => {
-        if (this.Name == '' || this.Description == null || this.Type == null || this.Date == null) {
+        if (this.Name == '' || this.Type == null || this.Date == null) {
             return 1;
         } else return 0;
     };
