@@ -329,7 +329,7 @@ export default {
             this.load.Calculate(true);
 
             this.card.Task.forEach(Task => {
-                if (Task.status) {
+                if (Task.status == 'new') {
                     apiService.User.Tasks.PostTask(Task);
                 } else {
                     apiService.User.Tasks.PutTask(Task);
@@ -352,8 +352,7 @@ export default {
         },
 
         addTask: function (card) {
-            var lengthTask = card.Task.length;
-            card.Task.push({ id: lengthTask, cardId: card.id, done: false, text: '', status: 'new' });
+            card.Task.push({ cardId: card.id, done: false, text: '', status: 'new' });
         },
 
         deleteTask: function (taskId) {
